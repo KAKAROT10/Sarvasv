@@ -317,7 +317,7 @@
     -webkit-transform: rotate(0deg); /* Safari */
     transform: rotate(0deg);}
 }
-}
+
 
 
 /* Standard syntax */
@@ -399,7 +399,6 @@
 .midfooter
 {
     background-color: #333333;
-    filter;
     z-index:60;
     padding-left: 10px;
     padding-top: 2px;

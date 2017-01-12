@@ -1,5 +1,6 @@
-
-<!DOCTYPE html> 
+{% extends "polls/base.html" %}
+{% load static %}
+{% comment %}<!DOCTYPE html>
 <html>
 <head>
     {%load static%}
@@ -24,30 +25,42 @@
     <title>Sarvasv-IITBHU</title>
  <!-- css-->
     <link rel="stylesheet" type="text/css" href="{%static "stylesheets/layout.css"%}">
-    <link rel="stylesheet" type="text/css" href="{%static "stylesheets/main.css"%}">
-     <link rel="stylesheet" type="text/css" href="{%static "stylesheets/quiz.css"%}">
- <!-- Scripts -->
-    <script src="{%static "scripts/jquery-2.2.1.min.js"%}" type="text/javascript"></script>
-     <script src="{%static "scripts/layout.js"%}" type="text/javascript"></script>
-     <script type="text/javascript">
+    <link rel="stylesheet" type="text/css" href="{%static "stylesheets/main.css"%}">{% endcomment %}
+     {% block css_links%}
+        <link rel="stylesheet" type="text/css" href="{%static "stylesheets/quiz.css"%}">
+     {% endblock %}
+<!-- Scripts -->
+     {% block script_links %}{% endblock %}
+    {% comment %}<script src="{%static "scripts/jquery-2.2.1.min.js"%}" type="text/javascript"></script>
+     <script src="{%static "scripts/layout.js"%}" type="text/javascript"></script>{% endcomment %}
+
+    {% block body_block %}
+
+    <script type="text/javascript">
 
 $(document).ready(function(){
 
     var colsel=["#8d8d8d","#727272","#555555","#adadad"];
     var qds={{ qds|safe }};
     var qdm={{ qdm|safe }};
+    var qdi={{ qdi|safe }};
     var ns={{ nsques }};
     var nm={{ nmques }};
-
+    var ni={{ niques }};
+    var ians=[ni];
     for(var  i=0; i<ns; i++){
         qds[i][0]="a0"+qds[i][0];
     }
     for(var i=0; i<nm; i++){
         qdm[i][0]="b0"+qdm[i][0];
     }
+    for(var i=0; i<ni; i++){
+        qdi[i][0]="c0"+qdi[i][0];
+        ians[i]="";
+    }
     var nqs=ns;
     var nqm=nm;
-    var tq=nqs+nqm;
+    var tq=nqs+nqm+ni;
     var qa=0;
      var qust="Question Unattempted: "+(tq);
 
@@ -55,8 +68,13 @@ $(document).ready(function(){
         $(".score_board>div:nth-child(3)").text(qust);
     if(ns==0)$(".sc").text("");
      if(nm==0)$(".mc").text("");
+     if(ni==0)$(".it").text("");
     for(var i=0;i<nqs;i++){
-        var nq=" <div id="+qds[i][0]+"><div><span>Q"+(i+1)+":</span> "+qds[i][1]+"</div>";
+        var nq=" <div id="+qds[i][0]+"><div><span>Q"+(i+1)+":</span> "+qds[i][1];
+
+        if(qds[i][12]!="0")nq+=  "<img class='qimg' src='{% static '"+qds[i][12]+"'%}'</img>";
+        nq+="</div>";
+
         for(var j=2;j<=11;j++){
             if(qds[i][j]!=null)nq+="<div>"+qds[i][j]+"</div>";
             else break;
@@ -65,7 +83,9 @@ $(document).ready(function(){
         $(".sc").append(nq);
     }
     for(var i=0;i<nqm;i++){
-        var nq=" <div id="+qdm[i][0]+"><div><span>Q"+(i+1)+":</span> "+qdm[i][1]+"</div>";
+        var nq=" <div id="+qdm[i][0]+"><div><span>Q"+(i+1)+":</span> "+qdm[i][1];
+        if(qdm[i][12]!="0")nq+=  "<img class='qimg' src='{% static '"+qdm[i][12]+"'%}'</img>";
+        nq+="</div>";
         for(var j=2;j<=11;j++){
             if(qdm[i][j]!=null)nq+="<div>"+qdm[i][j]+"</div>";
             else break;
@@ -73,6 +93,20 @@ $(document).ready(function(){
         nq+="</div>";
         $(".mc").append(nq);
     }
+    for(var i=0;i<ni;i++){
+        var nq=" <div id="+qdi[i][0]+"><div><span>Q"+(i+1)+":</span>"+qdi[i][1];
+
+        if(qdi[i][2]!="0")nq+=  "<img class='qimg' src='{% static '"+qdi[i][2]+"'%}'</img>";
+    nq+="</div><div><input type='text' class='itext'><input type='button' class='isub' value='Confirm'></div></div>";
+
+
+        $(".it").append(nq);
+    }
+
+
+
+
+
 
 
 //ans append codes
@@ -92,6 +126,13 @@ for(var i=0;i<nqs;i++)
             if(qapat[ui][j-1]=="1"){$(".mc").children().eq(i+1).children().eq(j).addClass("selop");
         $(".mc").children().eq(i+1).children().eq(j).css("background","white");chk=1;} }
         if(chk==1)qa++;
+        ui++;}
+    for(var i=0;i<ni;i++)
+    {  if(qapat[ui]!="0000000000"&&qapat[ui]!=""){
+        $(".it").children().eq(i+1).children().eq(1).children().eq(0).val(qapat[ui]);
+        qa++;
+        ians[i]=qapat[ui];
+    }
         ui++;}
 
 
@@ -196,6 +237,35 @@ $(this).addClass("selop");
         }
           outajax();
     });
+    $(".isub").click(function(){
+        var curr=0;
+        for(var i=1;i<=ni;i++) {
+            if ($(this).parent().parent()[0]==$(".it").children().eq(i)[0])
+            { curr=i-1;break;}
+                    }
+
+          if($(this).parent().children().eq(0).val()==""){
+              if(ians[curr]!="")qa--;
+              }
+        else{
+              if(ians[curr]=="")qa++;
+          }
+
+        ians[curr]=$(this).parent().children().eq(0).val();
+
+ var qast="Question Attempted: "+qa;
+           var qust="Question Unattempted: "+(tq-qa);
+
+         $(".score_board>div:nth-child(2)").text(qast);
+        $(".score_board>div:nth-child(3)").text(qust);
+        var pbp=(qa/tq*100)+"%";
+        $(".score_board_progress>div").animate({width:pbp});
+
+          outajax();
+
+
+
+    });
 
       var sec={{ tleft }};
 
@@ -266,7 +336,10 @@ function getCookie(c_name) {
 
         }ans+="|";
      }
-
+for(var i=0;i<=ni;i++){
+    if(ians=="")ans+="0000000000|";
+    else ans+=ians[i]+"|";
+}
       $.ajax({url: "/polls/events/selquiz/quiz/QuizPlay/{{ quizname }}/",dataType:"json",type:'POST',data:{ans:ans,  csrfmiddlewaretoken: '{{ csrftoken }}'}, success: function(json){
        if(json.response=="redirect") window.open("/polls/events/selquiz/quiz/QuizPlay/Score/{{ quizname }}/","_self");
 
@@ -276,13 +349,14 @@ function getCookie(c_name) {
 
  }
     $(".submitbutton").click(function(){
+        if(confirm("Are you sure to Submit and Finish Quiz?"))
         window.open("/polls/events/selquiz/quiz/QuizPlay/Score/{{ quizname }}/","_self");
     });
    });
 
 
      </script>
-    
+    {% comment %}
 </head>
 
 <body><div class="bodym">
@@ -325,13 +399,14 @@ function getCookie(c_name) {
     
          
     </div>
+    {% endcomment %}
     <div class="bodyc">
         
         <!-- Main page content-->
         
         <div class="row">
         <div class="col-12 border quizh">
-            {{ quizname }}
+            {{ quizname }} <span>(<a href="../../desc/{{ quizname }}/" target="_blank">details</a>)</span>
             </div>
         
         
@@ -339,17 +414,21 @@ function getCookie(c_name) {
         </div>
         <div class="row">
         <div class="sc col-12">
-           <h1>Single Correct type</h1>
+          <h1>Single Correct type<span class="msinh"><span>{{ scc }}</span> <span>{{ sci }}</span></span></h1>
             
      
             
         </div>
             <div class="mc col-12">
-           <h1>Multi Correct type</h1>
+           <h1>Multi Correct type<span class="msinh"><span>{{ mcc }}</span> <span>{{ mci }}</span></span></h1>
             
       
             
         </div>
+            <div class="it col-12">
+           <h1>Input Type<span class="msinh"><span>{{ icc }}</span> <span>{{ ici }}</span></span></h1>
+
+                </div>
            <center><input type="button" class="submitbutton"  value="Submit"></center> 
         </div>
         <div class="row score_board">
@@ -360,7 +439,10 @@ function getCookie(c_name) {
         <div></div>
         </div>
          <!-- End Main page content-->
-   <div class="row"> <div class="mainfooter col-12">
+   <div class="row">
+        </div>
+        {% endblock %}
+        </div>{% comment %}<div class="mainfooter col-12">
 
     
         <div class="transbr"></div>
@@ -391,8 +473,4 @@ function getCookie(c_name) {
     <div class="tc">
        <center><a href="terms and conditions.html"><u>Terms and Conditions</u></a></center> 
     </div>
-    </div></div></div>
-   
-    </body>
-
-</html>
+    </div></div>{% endcomment %}

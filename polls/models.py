@@ -7,30 +7,25 @@ class UserProfile(models.Model):
      firstname = models.CharField(max_length=60,null=True,blank=True)
      dob = models.DateField(null=True,blank=True)
      contact = models.CharField(max_length=11,null=True,blank=True)
-     college = models.CharField(max_length=120)
+     college = models.CharField(max_length=120,null=True,blank=True)
      emailid = models.EmailField()
      username=models.CharField(max_length=200)
-     password = models.CharField(max_length=20)
-     interest1 = models.NullBooleanField(default=False)
-     interest2 = models.NullBooleanField(default=False)
-     interest3 = models.NullBooleanField(default=False)
-     interest4 = models.NullBooleanField(default=False)
-     interest5 = models.NullBooleanField(default=False)
+     password = models.CharField(max_length=20,blank=True,null=True)
      picture=models.ImageField(upload_to='profile_images', blank=True, null=True)
 
 class Global(models.Model):
     username=models.CharField(max_length=200,blank=True)
     emailid=models.EmailField()
-    sessionid=models.CharField(max_length=10000,blank=True)
-    is_loggedin=models.BooleanField(default=False)
+    sessionid=models.CharField(max_length=1000,blank=True)
 
 class Users(models.Model):
     college = models.CharField(max_length=120)
     emailid = models.EmailField()
-    password = models.CharField(max_length=20)
-    conpassword=models.CharField(max_length=20)
+    password = models.CharField(max_length=20,blank=True,null=True)
+    conpassword=models.CharField(max_length=20,blank=True,null=True)
     username=models.CharField(max_length=200)
     otp=models.CharField(max_length=20,blank=True)
+    name=models.CharField(max_length=200,default='none')
 
 #class Dummy(models.Model):
     #dummydata=models.CharField(max_length=10)
@@ -43,26 +38,9 @@ class ProfilePicture(models.Model):
     def __unicode__(self):
         return self.emailid
 
-class Question(models.Model):
-    qid=models.CharField(max_length=8,blank=False, null=False)
-    questionText=models.CharField(max_length=5000,blank=False,null=False)
-    option1Text=models.CharField(max_length=500,blank=True,null=True)
-    option2Text=models.CharField(max_length=500,blank=True,null=True)
-    option3Text=models.CharField(max_length=500,blank=True,null=True)
-    option4Text=models.CharField(max_length=500,blank=True,null=True)
-    option5Text=models.CharField(max_length=500,blank=True,null=True)
-    option6Text=models.CharField(max_length=500,blank=True,null=True)
-    option7Text=models.CharField(max_length=500,blank=True,null=True)
-    option8Text=models.CharField(max_length=500,blank=True,null=True)
-    option9Text=models.CharField(max_length=500,blank=True,null=True)
-    option10Text=models.CharField(max_length=500,blank=True,null=True)
-    answerSeq=models.CharField(max_length=10,blank=False,null=False)
-
 class QuizReg(models.Model):
     loginid=models.CharField(max_length=1000,blank=False,null=False)
     passwd=models.CharField(max_length=1000,blank=False,null=False)
-
-
 
 class QuizGlobal(models.Model):
     creator=models.CharField(max_length=1000,blank=False,null=False)
@@ -77,3 +55,5 @@ class QuizGlobal(models.Model):
     msci=models.IntegerField(blank=True, null=True)
     mmcc=models.IntegerField(blank=True, null=True)
     mmci=models.IntegerField(blank=True, null=True)
+    minputypecorrect=models.IntegerField(blank=True,null=True)
+    minputypeincorrect=models.IntegerField(blank=True,null=True)

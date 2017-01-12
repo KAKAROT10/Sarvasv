@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+#import pymysql
+#pymysql.install_as_MySQLdb()
 SETTINGS_DIR = os.path.dirname(__file__)
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -94,7 +96,17 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
+'''
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'db7',
+        'USER': 'root',
+        'PASSWORD': 'xinjia',
+        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        'PORT': '3306',
+    }
+}'''
 TEMPLATE_CONTEXT_PROCESSORS = [
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.debug',
@@ -135,7 +147,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-SESSION_ENGINE ='django.contrib.sessions.backends.cache'
+##SESSION_ENGINE ='django.contrib.sessions.backends.cache'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/

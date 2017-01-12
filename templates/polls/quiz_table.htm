@@ -1,4 +1,6 @@
-<!DOCTYPE html> 
+{% extends "polls/base.html" %}
+{% load static %}
+{% comment %}<!DOCTYPE html>
 <html>
 <head>
     {% load static %}
@@ -23,19 +25,25 @@
     <title>Sarvasv-IITBHU</title>
  <!-- css-->
     <link rel="stylesheet" type="text/css" href="{%static "stylesheets/layout.css"%}">
-    <link rel="stylesheet" type="text/css" href="{%static "stylesheets/main.css"%}">
-    
-    <link rel="stylesheet" type="text/css" href="{%static "stylesheets/quiz_table.css"%}">
- <!-- Scripts -->
-    <script src="{%static "scripts/jquery-2.2.1.min.js"%}" type="text/javascript"></script>
-     <script src="{%static "scripts/layout.js"%}" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="{%static "stylesheets/main.css"%}">{% endcomment %}
+    {% block css_links %}
+        <link rel="stylesheet" type="text/css" href="{%static "stylesheets/quiz_table.css"%}">
+    {% endblock %}
+<!-- Scripts -->
+    {% block script_links %}{% endblock %}
+    {% comment %}<script src="{%static "scripts/jquery-2.2.1.min.js"%}" type="text/javascript"></script>
+     <script src="{%static "scripts/layout.js"%}" type="text/javascript"></script>{% endcomment %}
+
+{% block body_block %}
+
     <script type="text/javascript">
 $(document).ready(function() {
     var usernm ={{ usernm|safe }};
     var points ={{ points|safe }};
     var duration ={{ duration|safe }};
+    var size1={{ size }};
 
-    for (var i = 0; i < usernm.length; i++) {
+    for (var i = 0; i < size1; i++) {
         $(".quiz_table").append(" <tr><td>" + (i + 1) + "</td><td>" + usernm[i] + "</td> <td>" + duration[i] + "</td> <td>" + points[i] + "</td></tr>");
     }
 
@@ -44,7 +52,7 @@ $(document).ready(function() {
     </script>
      
   
-    
+{% comment %}
 </head>
 
 <body><div class="bodym">
@@ -84,15 +92,15 @@ $(document).ready(function() {
         </fieldset>
     </form>
     <img src="{%static "images/menu_foot.png"%}" class="menuf">
-    </div>
+    </div>{% endcomment %}
     <div class="bodyc"><br>
          <!-- Main page content-->
         <h1>Quiz Log</h1>
         <div class="quizlogs">
-            <span><span>  UserName  </span>   <span> {{ username0 }}  </span></span>
+            <span><span>  UserName  </span>   <span> {{ username}}  </span></span>
              <span>  <span> Questions (attempted/ Total) </span>   <span> {{ attques }}/{{ totques }}  </span></span>
-              <span> <span>  Time Spent   </span><span>   {{ duration0 }}  </span></span>
-             <span>  <span>  Score </span>   <span>   {{ score0 }}/{{ maxmarks }}  </span></span>
+              <span> <span>  Time Spent   </span><span>   {{ dur }}  </span></span>
+             <span>  <span>  Score </span>   <span>   {{ score }}/{{ maxmarks }}  </span></span>
              <span>  <span>  Rank </span>  <span> {{ rank }} </span></span>
             
         </div>
@@ -112,9 +120,11 @@ $(document).ready(function() {
         
       <br><br><br><br><br><br><br><br>
          <!-- End Main page content-->
-   <div class="row"> <div class="mainfooter col-12">
-
-    
+   <div class="row">
+    </div>
+        {% endblock %}
+            </div>
+    {% comment %}<div class="mainfooter col-12">
         <div class="transbr"></div>
          <div class="transbl"></div>
     <p>"Sarvasv is an online platform dhfadsfadhfajkfaba;fhs".</p>
@@ -143,8 +153,4 @@ $(document).ready(function() {
     <div class="tc">
        <center><a href="terms and conditions.html"><u>Terms and Conditions</u></a></center> 
     </div>
-    </div></div></div>
-   
-    </body>
-
-</html>
+    </div></div>{% endcomment %}

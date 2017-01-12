@@ -8,16 +8,17 @@ from polls.models import Users
 
 
 def mail(eid):
-   #email = EmailMessage('Subject','otp', to=[eid])
    subject, from_email, to = 'hello', 'solankiarnav123@gmail.com', eid
    text_content = 'This is an important message.'
    otp=random_num()
    otpstr=str(otp)
+   print(otp)
    html_content = '<p><a  href="http://127.0.0.1:8000/polls/register/'+eid+'/'+otpstr+'/" ><strong>Here is your link to the next page</strong></a></p>'
    msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
-   msg.attach_alternative(html_content, "text/html")
+   msg.attach_alternative(html_content,"text/html")
    t=msg.send()
-   return otpstr
+   dict={'t':t,'otpstr':otpstr}
+   return dict
 
 def mail2(eid,quizname):
    #email = EmailMessage('Subject','otp', to=[eid])

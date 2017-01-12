@@ -22,8 +22,11 @@
      color: white;
      cursor: pointer;
      margin-top: 10px;
-   
-    height: 280px;
+
+     display: block;
+    overflow: hidden;
+    margin-bottom: 30px;
+    padding: 10px;
 
 }
 .sc>div:hover,.mc>div:hover{
@@ -80,19 +83,13 @@
     
 
 }
-.selop{
-    
-    color:black;
-}
 
 @media only screen and (max-width: 600px) {
     .sc>div>div,.mc>div>div{
         width: 100%;
         float: left;
     }
-    .sc>div,.mc>div {
-     height: 400px;
-    }
+
     
 }
 .score_board {
@@ -130,3 +127,119 @@
     margin-right: auto;
     display: block;
 }
+
+.selop{
+
+    color:black;
+    font-weight: bold;
+
+}
+.selop:before{
+    content:'\2713';
+    margin-right: 5px;
+      margin-left: 5px;
+    color:green;
+}
+/*input wali styling*/
+
+.it{
+     padding-top: 30px;
+}
+
+.it>div:hover,.it>div:hover{
+    width:80%;
+}
+
+.it>div {
+
+   margin-left: auto;
+    margin-right: auto;
+    width:75%;
+    border-radius: 5px;
+    transition: width 0.5s;
+     color: white;
+     cursor: pointer;
+     margin-top: 10px;
+display: block;
+    overflow: hidden;
+    margin-bottom: 30px;
+    padding: 10px;
+
+
+}
+.it>div:nth-child(2){
+    margin-top: 60px;
+}
+.it>div>div:nth-child(1){
+    background: #6699ff;
+
+        box-shadow: 0 0 10px black;
+    padding:5px;
+
+    transition: background 0.5s , color 0.5s;
+}
+.it>div>div:nth-child(1)>span{
+    font-family: heading;}
+
+.it>div>div:nth-child(2){
+    background: #d0d0d0;
+
+        box-shadow: 0 0 10px black;
+    padding:5px;
+
+    transition: background 0.5s , color 0.5s;
+}
+
+.it>div>div:nth-child(1):hover{
+    color:white;
+    background: #5579bf;
+}
+.it>div>div:nth-child(2):hover{
+
+    background:#9d9d9d;
+
+}
+.it>div>div>input{
+    width: 90%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.msinh{
+    float:right;
+    margin-right: 5px;
+    font-size:20px;
+    font-family: heading;
+}
+.msinh>span{
+     font-family: heading;
+}
+.msinh>span:nth-child(1):before{
+    content:'+';
+    color: lawngreen;
+     font-family: heading;
+}
+.msinh>span:nth-child(2):before{
+    content:'-';
+    color: red;
+     font-family: heading;
+}
+.quizh>span{
+    color:lightgray;
+    font-size: 20px;
+}
+.quizh>span>a{
+    color:lightgray;
+    font-size: 20px;
+    text-decoration: none;
+}
+.qimg{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    max-width: 90%;
+}
+
+

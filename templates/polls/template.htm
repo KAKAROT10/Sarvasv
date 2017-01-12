@@ -1,5 +1,6 @@
-
-<!DOCTYPE html> 
+{% extends "polls/base.html" %}
+{% load static %}
+{% comment %}<!DOCTYPE html>
 <html>
 <head>
     
@@ -25,14 +26,19 @@
     <title>Sarvasv-IITBHU</title>
  <!-- css-->
     <link rel="stylesheet" type="text/css" href="{% static  "stylesheets/layout.css"%}">
-    <link rel="stylesheet" type="text/css" href="{% static "stylesheets/main.css"%}">
-     <link rel="stylesheet" type="text/css" href="{% static "stylesheets/home.css"%}">
+    <link rel="stylesheet" type="text/css" href="{% static "stylesheets/main.css"%}">{% endcomment %}
+     {% block css_links %}
+        <link rel="stylesheet" type="text/css" href="{% static "stylesheets/home.css"%}">
+    {% endblock %}
 
  <!-- Scripts -->
-    <script src="{%static "scripts/jquery-2.2.1.min.js"%}" type="text/javascript"></script>
-     <script src="{%static "scripts/layout.js"%}" type="text/javascript"></script>
-      <script src="{%static "scripts/home.js"%}" type="text/javascript" >
-    </script>
+    {% comment %}<script src="{%static "scripts/jquery-2.2.1.min.js"%}" type="text/javascript"></script>
+     <script src="{%static "scripts/layout.js"%}" type="text/javascript"></script>{% endcomment %}
+     {% block script_links %}
+        <script src="{%static "scripts/home.js"%}" type="text/javascript" ></script>
+     {% endblock %}
+
+ {% comment %}
   <div class="messagebox"><div class="messagetitle"></div><div class="messagetext"></div>
 </div><div class="closingmessage">«</div>
        
@@ -84,12 +90,16 @@
     <img src="{% static "images/menu_foot.png"%}" class="menuf">
     
          
-    </div>
+    </div>{% endcomment %}
+    {% block body_block %}
+
     <div class="bodyc">
         <!--Start your Code Here -->
             
         <!--End your Code Here -->
-    <div class="mainfooter col-12">
+    {% endblock %}
+    </div>
+    {% comment %}<div class="mainfooter col-12">
 
     
         <div class="transbr"></div>
@@ -120,8 +130,4 @@
     <div class="tc">
        <center><a href="terms and conditions.html"><u>Terms and Conditions</u></a></center> 
     </div>
-    </div></div>
-   
-    </body>
-
-</html>
+    </div>{% endcomment %}
